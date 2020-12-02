@@ -3,14 +3,12 @@ import 'package:plater_flutter/models/recipe_model.dart';
 import 'package:plater_flutter/services/api_services.dart';
 import 'package:plater_flutter/views/recipe_details.dart';
 
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-
   List<RecipeModel> _recipes = List<RecipeModel>();
   TextEditingController textEditingController = new TextEditingController();
 
@@ -43,14 +41,26 @@ class _HomeState extends State<Home> {
       ),
       body: Stack(children: [
         SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                child: Column(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    TextField(
-                      controller: textEditingController,
-                      decoration: InputDecoration(hintText: 'Enter recipe name'),
+                    Expanded(
+                      child: TextField(
+                        controller: textEditingController,
+                        decoration:
+                            InputDecoration(
+                                hintText: 'Enter recipe name',
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.orange)
+                                ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.pink)
+                              )
+                            ),
+                      ),
                     ),
                     IconButton(
                         icon: Icon(Icons.search),
@@ -65,30 +75,37 @@ class _HomeState extends State<Home> {
                             });
                           });
                         }),
-                    Container(
-                      width: 350.0,
-                      child: GridView(
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              mainAxisSpacing: 10.0, maxCrossAxisExtent: 200.0),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: ClampingScrollPhysics(),
-                          children: List.generate(_recipes.length, (index) {
-                            return GridTile(
-                              child: RecipeTile(
-                                label: _recipes[index].label,
-                                image: _recipes[index].image,
-                                source: _recipes[index].source,
-                                url: _recipes[index].url,
-                                recipeDetailsWidgetData: [_recipes[index]],
-                              ),
-                            );
-                          })),
-                    )
                   ],
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 40.0,
+                ),
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                      child: GridView(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            mainAxisSpacing: 10.0, maxCrossAxisExtent: 200.0),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        physics: ClampingScrollPhysics(),
+                        children: List.generate(_recipes.length, (index) {
+                          return GridTile(
+                              child: RecipeTile(
+                            label: _recipes[index].label,
+                            image: _recipes[index].image,
+                            source: _recipes[index].source,
+                            url: _recipes[index].url,
+                            recipeDetailsWidgetData: [_recipes[index]],
+                          ));
+                        }),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ]),
@@ -97,23 +114,20 @@ class _HomeState extends State<Home> {
 }
 
 class RecipeTile extends StatefulWidget {
-
   final String label, image, source, url;
   final List<RecipeModel> recipeDetailsWidgetData;
-  RecipeTile({
-    this.label,
-    this.image,
-    this.source,
-    this.url,
-    this.recipeDetailsWidgetData
-  });
+  RecipeTile(
+      {this.label,
+      this.image,
+      this.source,
+      this.url,
+      this.recipeDetailsWidgetData});
 
   @override
   _RecipeTileState createState() => _RecipeTileState();
 }
 
 class _RecipeTileState extends State<RecipeTile> {
-
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -121,11 +135,11 @@ class _RecipeTileState extends State<RecipeTile> {
         GestureDetector(
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RecipeDetails(
-                recipeDetailsData: widget.recipeDetailsWidgetData,
-              ))
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RecipeDetails(
+                          recipeDetailsData: widget.recipeDetailsWidgetData,
+                        )));
           },
           child: Container(
             width: 200,
