@@ -121,8 +121,15 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   height: 210.0,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.amber,
+                    color: Colors.blueGrey,
                     borderRadius: BorderRadius.circular(40.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0.0, 2.0),
+                        blurRadius: 10.0,
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
@@ -131,6 +138,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         style: TextStyle(
                           height: 1.8,
                           fontSize: 23.0,
+                          color: Colors.white
                         ),
                       ),
                       Expanded(
@@ -159,8 +167,15 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   height: 210.0,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.deepOrangeAccent,
+                    color: Colors.blueGrey,
                     borderRadius: BorderRadius.circular(40.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0.0, 2.0),
+                        blurRadius: 10.0,
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
@@ -169,6 +184,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         style: TextStyle(
                           height: 1.8,
                           fontSize: 23.0,
+                          color: Colors.white
                         ),
                       ),
                       Expanded(
