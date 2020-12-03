@@ -1,7 +1,9 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:plater_flutter/models/recipe_model.dart';
 import 'package:plater_flutter/services/api_services.dart';
 import 'package:plater_flutter/views/recipe_details.dart';
+import 'package:plater_flutter/utils/ImageFilter.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -50,16 +52,12 @@ class _HomeState extends State<Home> {
                     Expanded(
                       child: TextField(
                         controller: textEditingController,
-                        decoration:
-                            InputDecoration(
-                                hintText: 'Enter recipe name',
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.orange)
-                                ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.pink)
-                              )
-                            ),
+                        decoration: InputDecoration(
+                            hintText: 'Enter recipe name',
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.orange)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.pink))),
                       ),
                     ),
                     IconButton(
@@ -83,7 +81,8 @@ class _HomeState extends State<Home> {
                 Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 20.0),
                       child: GridView(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                             mainAxisSpacing: 10.0, maxCrossAxisExtent: 200.0),
@@ -148,19 +147,26 @@ class _RecipeTileState extends State<RecipeTile> {
               children: [
                 Hero(
                   tag: widget.image,
-                  child: Image.network(
-                    widget.image,
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
+                  child: ImageFilter(
+                    hue: 0.0,
+                    brightness: -0.20,
+                    saturation: 0.1,
+                    child: Image.network(
+                      widget.image,
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Container(
                   width: 200,
                   child: Column(
                     children: [
-                      Text(widget.label),
-                      Text(widget.source),
+                      Text(
+                        widget.label,
+                        style: TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
                     ],
                   ),
                 )
