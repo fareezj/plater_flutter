@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plater_flutter/models/recipe_model.dart';
-import 'package:plater_flutter/utils/ColorFilterGenerator.dart';
+import 'package:plater_flutter/utils/ImageFilter.dart';
 
 class RecipeDetails extends StatefulWidget {
   RecipeDetails({this.recipeDetailsData});
@@ -94,31 +94,4 @@ class _RecipeDetailsState extends State<RecipeDetails> {
       ),
     );
   }
-}
-
-
-
-Widget ImageFilter({brightness, saturation, hue, child}) {
-  return ColorFiltered(
-      colorFilter: ColorFilter.matrix(
-          ColorFilterGenerator.brightnessAdjustMatrix(
-            value: brightness,
-          )
-      ),
-      child: ColorFiltered(
-          colorFilter: ColorFilter.matrix(
-              ColorFilterGenerator.saturationAdjustMatrix(
-                value: saturation,
-              )
-          ),
-          child: ColorFiltered(
-            colorFilter: ColorFilter.matrix(
-                ColorFilterGenerator.hueAdjustMatrix(
-                  value: hue,
-                )
-            ),
-            child: child,
-          )
-      )
-  );
 }
