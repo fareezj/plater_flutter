@@ -99,6 +99,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         icon: Icon(Icons.arrow_back_ios_rounded),
                         onPressed: () => Navigator.pop(context),
                         color: Colors.white,
+                        iconSize: 40.0,
                       ),
                     ],
                   ),
@@ -121,7 +122,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   height: 210.0,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.blueGrey,
+                    color: Colors.amber.shade800,
                     borderRadius: BorderRadius.circular(40.0),
                     boxShadow: [
                       BoxShadow(
@@ -167,7 +168,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   height: 210.0,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.blueGrey,
+                    color: Colors.red.shade900,
                     borderRadius: BorderRadius.circular(40.0),
                     boxShadow: [
                       BoxShadow(

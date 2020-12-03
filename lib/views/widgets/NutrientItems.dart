@@ -27,10 +27,13 @@ class _NutrientItemsState extends State<NutrientItems> {
             widget.nutLabel,
             style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
           ),
+          SizedBox(
+            height: 5.0,
+          ),
           Text(
             widget.nutTotal.toStringAsFixed(1),
             style: TextStyle(
-              fontSize: 18.0,
+              fontSize: 28.0,
               fontWeight: FontWeight.w600,
             ),
           ),
