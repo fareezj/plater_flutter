@@ -28,28 +28,44 @@ class _RecipeDetailsState extends State<RecipeDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Container(
-          height: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black54,
-                offset: Offset(0.0, 2.0),
-                blurRadius: 6.0,
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 6.0,
+                ),
+              ],
+            ),
+            child: Hero(
+              tag: recipeImage,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30.0),
+                child: Image.network(
+                  recipeImage,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30.0),
-            child: Image.network(
-                recipeImage,
-                fit: BoxFit.cover,
             ),
           ),
-        ),
-      ]),
+          SafeArea(
+            child: Row(
+              children: [
+                IconButton(
+                    icon: Icon(Icons.arrow_back_ios_rounded),
+                    onPressed: () => Navigator.pop(context),
+                    color: Colors.white,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

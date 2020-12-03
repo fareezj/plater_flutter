@@ -146,11 +146,14 @@ class _RecipeTileState extends State<RecipeTile> {
             padding: EdgeInsets.all(10.0),
             child: Stack(
               children: [
-                Image.network(
-                  widget.image,
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.cover,
+                Hero(
+                  tag: widget.image,
+                  child: Image.network(
+                    widget.image,
+                    width: 200,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Container(
                   width: 200,
