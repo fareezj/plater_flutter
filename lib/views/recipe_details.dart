@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plater_flutter/models/recipe_model.dart';
+import 'package:plater_flutter/utils/ColorFilterGenerator.dart';
 
 class RecipeDetails extends StatefulWidget {
   RecipeDetails({this.recipeDetailsData});
@@ -46,9 +47,22 @@ class _RecipeDetailsState extends State<RecipeDetails> {
               tag: recipeImage,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30.0),
-                child: Image.network(
-                  recipeImage,
-                  fit: BoxFit.cover,
+                child: ImageFilter(
+                    // DEFAULT IMAGE CONFIG:
+                    // HUE: 0.0
+                    // BRIGHTNESS: 0.1
+                    // SATURATION: 0.0
+                    hue: 0.0,
+                    brightness: -0.09,
+                    saturation: 0.1,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(recipeImage),
+                          ),
+                        )
+                    ),
                 ),
               ),
             ),
@@ -57,15 +71,54 @@ class _RecipeDetailsState extends State<RecipeDetails> {
             child: Row(
               children: [
                 IconButton(
-                    icon: Icon(Icons.arrow_back_ios_rounded),
-                    onPressed: () => Navigator.pop(context),
-                    color: Colors.white,
+                  icon: Icon(Icons.arrow_back_ios_rounded),
+                  onPressed: () => Navigator.pop(context),
+                  color: Colors.white,
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            left: 30.0,
+            bottom: 20.0,
+            child: Text(
+              recipeName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  letterSpacing: 1.3
+              ),
             ),
           )
         ],
       ),
     );
   }
+}
+
+
+
+Widget ImageFilter({brightness, saturation, hue, child}) {
+  return ColorFiltered(
+      colorFilter: ColorFilter.matrix(
+          ColorFilterGenerator.brightnessAdjustMatrix(
+            value: brightness,
+          )
+      ),
+      child: ColorFiltered(
+          colorFilter: ColorFilter.matrix(
+              ColorFilterGenerator.saturationAdjustMatrix(
+                value: saturation,
+              )
+          ),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.matrix(
+                ColorFilterGenerator.hueAdjustMatrix(
+                  value: hue,
+                )
+            ),
+            child: child,
+          )
+      )
+  );
 }
