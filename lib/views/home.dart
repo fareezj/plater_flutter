@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
       body: Stack(children: [
         SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 30.0),
+            padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
             child: Column(
               children: [
                 Row(
