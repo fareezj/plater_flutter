@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NutrientItems extends StatefulWidget {
-
   final String nutLabel;
-  final String nutTotal;
+  final double nutTotal;
   final String nutUnit;
 
   NutrientItems({this.nutLabel, this.nutTotal, this.nutUnit});
@@ -16,17 +15,32 @@ class _NutrientItemsState extends State<NutrientItems> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(4.0),
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      width: 120.0,
+      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
       decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(40.0)
-      ),
+          color: Colors.lightBlueAccent,
+          borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: [
-          Text(widget.nutLabel),
-          Text(widget.nutTotal),
-          Text(widget.nutUnit),
+          Text(
+            widget.nutLabel,
+            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            widget.nutTotal.toStringAsFixed(1),
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            widget.nutUnit,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:plater_flutter/models/recipe_model.dart';
 import 'package:plater_flutter/models/recipe_nutrients.dart';
 import 'package:plater_flutter/utils/ImageFilter.dart';
 import 'package:plater_flutter/views/widgets/IngredientItems.dart';
+import 'package:plater_flutter/views/widgets/NutrientItems.dart';
 
 class RecipeDetails extends StatefulWidget {
   RecipeDetails({this.recipeDetailsData});
@@ -144,6 +145,44 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                             );
                           },
                           itemCount: ingredientsItem.length,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                  height: 210.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrangeAccent,
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Nutrients',
+                        style: TextStyle(
+                          height: 1.8,
+                          fontSize: 23.0,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 20.0),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return NutrientItems(
+                              nutLabel: nutrientItem[index].label,
+                              nutTotal: nutrientItem[index].total,
+                              nutUnit: nutrientItem[index].unit,
+                            );
+                          },
+                          itemCount: nutrientItem.length,
                         ),
                       )
                     ],
