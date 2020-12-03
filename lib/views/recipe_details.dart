@@ -107,10 +107,15 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                 Positioned(
                   left: 30.0,
                   bottom: 20.0,
+                  right: 10.0,
                   child: Text(
                     recipeName,
+                    maxLines: 2,
                     style: TextStyle(
-                        color: Colors.white, fontSize: 30.0, letterSpacing: 1.3),
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.3),
                   ),
                 ),
               ],
