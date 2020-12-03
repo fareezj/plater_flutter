@@ -6,8 +6,9 @@ class RecipeModel {
   final String source;
   final String label;
   final List ingredients;
+  final List nutrients;
 
-  RecipeModel({this.image, this.url, this.source, this.label, this.ingredients});
+  RecipeModel({this.image, this.url, this.source, this.label, this.ingredients, this.nutrients});
 
   factory RecipeModel.fromJson(Map<String, dynamic> parsedJson) {
     return RecipeModel(
@@ -15,7 +16,8 @@ class RecipeModel {
       url: parsedJson["url"],
       source: parsedJson["source"],
       label: parsedJson["label"],
-      ingredients: parsedJson['ingredients']
+      ingredients: parsedJson['ingredients'],
+      nutrients: parsedJson['digest']
     );
   }
 }
