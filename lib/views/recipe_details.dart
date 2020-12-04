@@ -120,97 +120,91 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                 ),
               ],
             ),
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-                  height: 210.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.amber.shade800,
-                    borderRadius: BorderRadius.circular(40.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 10.0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
+            Positioned(
+              top: MediaQuery.of(context).size.height / 2 + 25.0,
+              left: 15.0,
+              child: Container(
+                  height: (MediaQuery.of(context).size.height / 2) - 25.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView(
                     children: [
-                      Text(
-                        'Ingredient List',
-                        style: TextStyle(
-                          height: 1.8,
-                          fontSize: 23.0,
-                          color: Colors.white
+                      Container(
+                        padding: EdgeInsets.only(left: 28.0),
+                        child: Text(
+                          'Ingredient List',
+                          style: TextStyle(
+                            fontFamily: 'nunito',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF726B68),
+                          ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return IngredientItems(
-                              ingItem: ingredientsItem[index].text,
-                              ingWeight: ingredientsItem[index].weight,
-                              ingImage: ingredientsItem[index].image != null
-                                  ? ingredientsItem[index].image
-                                  : "https://cdn1.iconfinder.com/data/icons/symbol-set-1/100/Untitled-2-63-512.png",
-                            );
-                          },
-                          itemCount: ingredientsItem.length,
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-                  height: 210.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade900,
-                    borderRadius: BorderRadius.circular(40.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 10.0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Nutrients',
-                        style: TextStyle(
-                          height: 1.8,
-                          fontSize: 23.0,
-                          color: Colors.white
+                      Container(
+                        height: 200.0,
+                        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                        child: Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              return IngredientItems(
+                                ingItem: ingredientsItem[index].text,
+                                ingWeight: ingredientsItem[index].weight,
+                                ingImage: ingredientsItem[index].image != null
+                                    ? ingredientsItem[index].image
+                                    : "https://cdn1.iconfinder.com/data/icons/symbol-set-1/100/Untitled-2-63-512.png",
+                              );
+                            },
+                            itemCount: ingredientsItem.length,
+                          ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 20.0),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return NutrientItems(
-                              nutLabel: nutrientItem[index].label,
-                              nutTotal: nutrientItem[index].total,
-                              nutUnit: nutrientItem[index].unit,
-                            );
-                          },
-                          itemCount: nutrientItem.length,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 35.0, left: 35.0, top: 18.0),
+                        child: Container(
+                          height: 0.5,
+                          color: Color(0xFFC6C4C4),
                         ),
-                      )
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.only(left: 28.0, top: 20.0),
+                        child: Text(
+                          'Nutrients Fact',
+                          style: TextStyle(
+                            fontFamily: 'nunito',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF726B68),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 200.0,
+                        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                        child: Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 20.0),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return NutrientItems(
+                                nutLabel: nutrientItem[index].label,
+                                nutTotal: nutrientItem[index].total,
+                                nutUnit: nutrientItem[index].unit,
+                              );
+                            },
+                            itemCount: nutrientItem.length,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 35.0, left: 35.0, top: 18.0),
+                        child: Container(
+                          height: 0.5,
+                          color: Color(0xFFC6C4C4),
+                        ),
+                      ),
                     ],
-                  ),
-                )
-              ],
+                  )),
             ),
           ],
         ),

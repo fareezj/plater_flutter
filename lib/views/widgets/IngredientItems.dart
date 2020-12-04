@@ -18,7 +18,7 @@ class _IngredientItemsState extends State<IngredientItems> {
       padding: EdgeInsets.all(4.0),
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       decoration: BoxDecoration(
-          color: Colors.white70, borderRadius: BorderRadius.circular(10.0)),
+          color: Colors.amber.shade300, borderRadius: BorderRadius.circular(10.0)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
