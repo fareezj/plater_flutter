@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:plater_flutter/viewModels/recipe_view_model.dart';
+import 'package:provider/provider.dart';
 import 'views/home.dart';
 import 'views/recipe_details.dart';
 
@@ -28,7 +30,10 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Home(),
+      home: ChangeNotifierProvider(
+        create: (context) => RecipeViewModel(),
+        child: Home(),
+      )
     );
   }
 }

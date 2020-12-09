@@ -2,8 +2,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:plater_flutter/models/recipe_model.dart';
 import 'package:plater_flutter/services/api_services.dart';
+import 'package:plater_flutter/viewModels/recipe_view_model.dart';
 import 'package:plater_flutter/views/recipe_details.dart';
 import 'package:plater_flutter/utils/ImageFilter.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,20 +21,6 @@ class _HomeState extends State<Home> {
   int prevCount = 0;
   int nextCount = 10;
   String queryData;
-
-  Future<List<RecipeModel>> getRecipeData(String query) async {
-    var recipes = List<RecipeModel>();
-    Map<String, dynamic> recipeData =
-        await ApiServices().getRecipe(query, prevCount, nextCount);
-    moreData = recipeData['more'];
-    print('More Data:  $moreData');
-    recipeData["hits"].forEach((element) {
-      RecipeModel recipeModel = new RecipeModel();
-      recipeModel = RecipeModel.fromJson(element['recipe']);
-      recipes.add(recipeModel);
-    });
-    return recipes;
-  }
 
   @override
   void initState() {
@@ -74,6 +62,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    final viewModel = Provider.of<RecipeViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Plater'),
@@ -103,7 +94,7 @@ class _HomeState extends State<Home> {
                           queryData = textEditingController.text;
                           setState(() {
                             _recipes.clear();
-                            getRecipeData(queryData).then((value) {
+                            viewModel.getRecipeData(queryData).then((value) {
                               setState(() {
                                 _recipes.addAll(value);
                               });
