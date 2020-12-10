@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'views/home.dart';
 import 'views/recipe_details.dart';
 

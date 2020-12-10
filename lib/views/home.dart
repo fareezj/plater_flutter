@@ -4,6 +4,7 @@ import 'package:plater_flutter/models/recipe_model.dart';
 import 'package:plater_flutter/services/api_services.dart';
 import 'package:plater_flutter/views/recipe_details.dart';
 import 'package:plater_flutter/utils/ImageFilter.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,10 +14,19 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<RecipeModel> _recipes = List<RecipeModel>();
   TextEditingController textEditingController = new TextEditingController();
+  ScrollController _scrollController = ScrollController();
+
+  bool moreData = false;
+  int prevCount = 0;
+  int nextCount = 10;
+  String queryData;
 
   Future<List<RecipeModel>> getRecipeData(String query) async {
     var recipes = List<RecipeModel>();
-    Map<String, dynamic> recipeData = await ApiServices().getRecipe(query);
+    Map<String, dynamic> recipeData =
+    await ApiServices().getRecipe(query, prevCount, nextCount);
+    moreData = recipeData['more'];
+    print('More Data:  $moreData');
     recipeData["hits"].forEach((element) {
       RecipeModel recipeModel = new RecipeModel();
       recipeModel = RecipeModel.fromJson(element['recipe']);
@@ -27,23 +37,52 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    getRecipeData("chicken").then((value) {
+    getRecipeData("seafood").then((value) {
       setState(() {
         _recipes.addAll(value);
       });
     });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent ==
+          _scrollController.position.pixels) {
+          if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+            if (moreData) {
+              var requestPrevCount = prevCount += 10;
+              var requestNextCount = nextCount += 10;
+              print('Prev $requestPrevCount');
+              print('Next $requestNextCount');
+                getRecipeData(queryData != null ? queryData : 'seafood').then((value) {
+                  print('Query: $queryData');
+                  print('Value: $value');
+                    setState(() {
+                      _recipes.addAll(value);
+                    });
+                });
+            }
+          }
+      }
+    });
+
     super.initState();
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Plater'),
       ),
-      body: Stack(children: [
-        SingleChildScrollView(
-          child: Container(
+      body: Stack(
+        children: [
+          Container(
             padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
             child: Column(
               children: [
@@ -63,7 +102,7 @@ class _HomeState extends State<Home> {
                     IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
-                          var queryData = textEditingController.text;
+                          queryData = textEditingController.text;
                           setState(() {
                             _recipes.clear();
                             getRecipeData(queryData).then((value) {
@@ -78,36 +117,31 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 40.0,
                 ),
-                Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 20.0),
-                      child: GridView(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            mainAxisSpacing: 10.0, maxCrossAxisExtent: 200.0),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: ClampingScrollPhysics(),
-                        children: List.generate(_recipes.length, (index) {
-                          return GridTile(
-                              child: RecipeTile(
-                            label: _recipes[index].label,
-                            image: _recipes[index].image,
-                            source: _recipes[index].source,
-                            url: _recipes[index].url,
-                            recipeDetailsWidgetData: [_recipes[index]],
-                          ));
-                        }),
-                      ),
-                    ),
-                  ],
+                Expanded(
+                  child: GridView(
+                    controller: _scrollController,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        mainAxisSpacing: 10.0, maxCrossAxisExtent: 200.0),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: ClampingScrollPhysics(),
+                    children: List.generate(_recipes.length, (index) {
+                      return GridTile(
+                          child: RecipeTile(
+                        label: _recipes[index].label,
+                        image: _recipes[index].image,
+                        source: _recipes[index].source,
+                        url: _recipes[index].url,
+                        recipeDetailsWidgetData: [_recipes[index]],
+                      ));
+                    }),
+                  ),
                 )
               ],
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
@@ -165,7 +199,10 @@ class _RecipeTileState extends State<RecipeTile> {
                     children: [
                       Text(
                         widget.label,
-                        style: TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),

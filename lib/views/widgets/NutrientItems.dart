@@ -15,11 +15,11 @@ class _NutrientItemsState extends State<NutrientItems> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120.0,
+      width: 150.0,
       padding: EdgeInsets.all(8.0),
       margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
       decoration: BoxDecoration(
-          color: Colors.lightBlueAccent,
+          color: Colors.amber.shade100,
           borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: [
