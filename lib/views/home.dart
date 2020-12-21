@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:plater_flutter/models/recipe_model.dart';
 import 'package:plater_flutter/services/api_services.dart';
+import 'package:plater_flutter/viewmodels/recipe_vm.dart';
 import 'package:plater_flutter/views/recipe_details.dart';
 import 'package:plater_flutter/utils/ImageFilter.dart';
 import 'package:provider/provider.dart';
@@ -12,56 +13,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   List<RecipeModel> _recipes = List<RecipeModel>();
   TextEditingController textEditingController = new TextEditingController();
   ScrollController _scrollController = ScrollController();
+  RecipeVM recipeVM = new RecipeVM();
 
-  bool moreData = false;
-  int prevCount = 0;
-  int nextCount = 10;
   String queryData;
-
-  Future<List<RecipeModel>> getRecipeData(String query) async {
-    var recipes = List<RecipeModel>();
-    Map<String, dynamic> recipeData =
-    await ApiServices().getRecipe(query, prevCount, nextCount);
-    moreData = recipeData['more'];
-    print('More Data:  $moreData');
-    recipeData["hits"].forEach((element) {
-      RecipeModel recipeModel = new RecipeModel();
-      recipeModel = RecipeModel.fromJson(element['recipe']);
-      recipes.add(recipeModel);
-    });
-    return recipes;
-  }
 
   @override
   void initState() {
-    getRecipeData("seafood").then((value) {
+    recipeVM.getRecipeData("seafood").then((value) {
       setState(() {
         _recipes.addAll(value);
       });
-    });
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent ==
-          _scrollController.position.pixels) {
-          if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-            if (moreData) {
-              var requestPrevCount = prevCount += 10;
-              var requestNextCount = nextCount += 10;
-              print('Prev $requestPrevCount');
-              print('Next $requestNextCount');
-                getRecipeData(queryData != null ? queryData : 'seafood').then((value) {
-                  print('Query: $queryData');
-                  print('Value: $value');
-                    setState(() {
-                      _recipes.addAll(value);
-                    });
-                });
-            }
-          }
-      }
     });
 
     super.initState();
@@ -105,7 +70,7 @@ class _HomeState extends State<Home> {
                           queryData = textEditingController.text;
                           setState(() {
                             _recipes.clear();
-                            getRecipeData(queryData).then((value) {
+                            recipeVM.getRecipeData(queryData).then((value) {
                               setState(() {
                                 _recipes.addAll(value);
                               });
